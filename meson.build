@@ -1,4 +1,4 @@
-project('GTKTankClient', 'cpp',
+project('GTKTankClient', 'c',
   version : '0.1',
   default_options : ['warning_level=3'])
 
@@ -8,8 +8,14 @@ glib = dependency('glib-2.0')
 threads = dependency('threads')
 gthread = dependency('gthread-2.0')
 curl = dependency('libcurl')
-dependencies= [gtkdep, glib, threads, gthread, curl]
-exe = executable('gtktankclient', 'gtktankclient.cpp', dependencies: dependencies,
+gst = dependency('gstreamer-1.0')
+dependencies= [gtkdep, glib, threads, gthread, curl, gst]
+
+exe = executable('gtktankclient', [
+		'gtktankclient.c',
+		'network.c',
+		'vehicle.c'
+	], dependencies: dependencies,
   install : true)
 
 test('basic', exe)
